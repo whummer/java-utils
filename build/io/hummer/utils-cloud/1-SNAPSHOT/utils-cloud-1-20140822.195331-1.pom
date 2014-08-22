@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>io.hummer</groupId>
+		<artifactId>utils</artifactId>
+		<version>1-SNAPSHOT</version>
+	</parent>
+	<artifactId>utils-cloud</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.hummer</groupId>
+			<artifactId>utils-misc</artifactId>
+			<version>1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>patched</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jclouds.api</groupId>
+			<artifactId>openstack-nova</artifactId>
+			<version>1.5.0-beta.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jclouds.api</groupId>
+			<artifactId>nova</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+	</dependencies>
+
+</project>

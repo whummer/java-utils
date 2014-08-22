@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>io.hummer</groupId>
+  <artifactId>utils-ws</artifactId>
+  <versioning>
+    <versions>
+      <version>1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20140822195337</lastUpdated>
+  </versioning>
+</metadata>
