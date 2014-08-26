@@ -3,9 +3,11 @@
   <groupId>io.hummer</groupId>
   <artifactId>utils-ws</artifactId>
   <versioning>
+    <release>1.0.0</release>
     <versions>
       <version>1-SNAPSHOT</version>
+      <version>1.0.0</version>
     </versions>
-    <lastUpdated>20140822195337</lastUpdated>
+    <lastUpdated>20140826080107</lastUpdated>
   </versioning>
 </metadata>

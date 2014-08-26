@@ -237,19 +237,28 @@ public class XMLUtil {
 		return s1.equals(s2);
 	}
 
-	public Document cloneCanonical(Document doc) throws Exception {
+	public Document cloneCanonical(Document doc) {
 		return cloneCanonical(doc.getDocumentElement()).getOwnerDocument();
 	}
 
-	public Element cloneCanonical(Element e) throws Exception {
-		return toElement(toStringCanonical(e));
+	public Element cloneCanonical(Element e) {
+		try {
+			return toElement(toStringCanonical(e));
+		} catch (Exception e2) {
+			throw new RuntimeException(e2);
+		}
 	}
 	
-	public String toStringCanonical(Element e) throws Exception {
-		Canonicalizer c14n = Canonicalizer
-				.getInstance(Canonicalizer.ALGO_ID_C14N_EXCL_WITH_COMMENTS);
-		String result = new String(c14n.canonicalizeSubtree(e, "true"));
-		return result;
+	public String toStringCanonical(Element e) {
+		try {
+			e = clone(e);
+			Canonicalizer c14n = Canonicalizer
+					.getInstance(Canonicalizer.ALGO_ID_C14N_EXCL_WITH_COMMENTS);
+			String result = new String(c14n.canonicalizeSubtree(e, "true"));
+			return result;
+		} catch (Exception e2) {
+			throw new RuntimeException(e2);
+		}
 	}
 	public Element createElement(String tagName) throws Exception {
 		Document doc = newDocument();

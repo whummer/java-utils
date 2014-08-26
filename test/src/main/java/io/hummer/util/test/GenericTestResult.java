@@ -104,6 +104,40 @@ public class GenericTestResult {
 		public void setEntries(List<Entry> entries) {
 			this.entries = entries;
 		}
+
+		public void addEntryIfDifferent(String key, double value,
+				String oldKeyPattnern, GenericTestResult parent) {
+			List<Double> old = parent.getValuesByPattern(oldKeyPattnern);
+			//System.out.println("Old/new value '" + key + "'/'" + oldKeyPattnern + "': " + old + "/" + value);
+			if(old.isEmpty() || old.get(old.size() - 1) != value) {
+				addEntry(key, value);
+			}
+		}
+
+		public void addEntryAndRemoveOldIfSame(
+				String keyPattern, String key, double value,
+				GenericTestResult parent) {
+			List<String> keys = parent.getAllValueNames(keyPattern);
+			addEntry(key, value);
+			if(keys.size() > 2) {
+				String oldKey1 = keys.get(keys.size() - 2);
+				String oldKey2 = keys.get(keys.size() - 1);
+				Double old1 = parent.getValue(oldKey1);
+				Double old2 = parent.getValue(oldKey2);
+				if(old1.equals(old2) && old2.equals(value)) {
+					/* remove oldKey2 which lies in the middle between oldKey1 and key */
+					removeEntry(oldKey2);
+				}
+			}
+		}
+
+		public void removeEntry(String name) {
+			for(int i = 0; i < entries.size(); i ++) {
+				if(entries.get(i).name.equals(name)) {
+					entries.remove(i);
+				}
+			}
+		}
 	}
 
 	@XmlRootElement

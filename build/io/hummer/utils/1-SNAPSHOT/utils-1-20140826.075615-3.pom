@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd ">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>io.hummer</groupId>
+	<artifactId>utils</artifactId>
+	<packaging>pom</packaging>
+	<version>1-SNAPSHOT</version>
+
+	<modules>
+		<module>misc</module>
+		<module>cloud</module>
+		<module>test</module>
+		<module>xml</module>
+		<module>ws</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<useProjectReferences>false</useProjectReferences>
+			 	</configuration>
+			 </plugin>
+			 <plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifestEntries>
+							<Premain-Class>at.ac.tuwien.infosys.util.perf.MemoryAgent</Premain-Class>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.5,)
+										</versionRange>
+										<goals>
+											<goal>add-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<log4j.version>1.2.14</log4j.version>
+		<wsdl4j.version>1.6.2</wsdl4j.version>
+		<saxon.version>9.4.0.7</saxon.version>
+		<jtidy.version>r938</jtidy.version>
+		<xmlsec.version>1.3.0</xmlsec.version> <!-- required for XML canonicalization -->
+		<javax.xml.version>1.0</javax.xml.version>
+		<jetty.version>7.6.0.RC5</jetty.version>
+		<servlet.version>2.5</servlet.version>
+		<xerces.version>2.9.1</xerces.version>
+		<hibernate.em.version>4.1.1.Final</hibernate.em.version>
+		<hibernate.version>3.2.7.ga</hibernate.version>
+		<mysql.connector.version>5.1.22</mysql.connector.version>
+		<xml.apis.version>1.3.04</xml.apis.version>
+		<slf4j.version>1.6.1</slf4j.version>
+		<javax.ws.rs.version>1.1.1</javax.ws.rs.version>
+		<!-- had to upgrade from 1.4 to 1.9, because some transitive 
+			dependencies were not  -->
+		<jersey.version>1.9</jersey.version>
+		<javax.mail.version>1.4.1</javax.mail.version>
+		<!-- we would like to upgrade to asm 4.0, but jersey and other 
+		 	 libs prevent us from doing so...  -->
+		<asm.version>3.3.1</asm.version>
+		<fastinfoset.version>1.2.9</fastinfoset.version>
+		<htmlunit.version>2.9</htmlunit.version>
+		<guava.version>12.0</guava.version>
+		<commons.codec.version>1.5</commons.codec.version>
+		<commons.math.version>2.2</commons.math.version>
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons.io.version>2.0.1</commons.io.version>
+		<!-- do NOT use jaxb 2.2.5!
+			something must have changed from 2.2.4 to 2.2.5, because we are unable 
+			to unmarshall some files (e.g., strategyChain.xml in WS-Aggregation) -->
+		<jaxb.version>2.2.4</jaxb.version>
+		<jaxws.version>2.2.5</jaxws.version>
+		<tagsoup.version>1.2.1</tagsoup.version>
+		<junit.version>4.11</junit.version>
+		<org.reflections.version>0.9.9-RC1</org.reflections.version> <!-- used for scanning the classpath for resources -->
+
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>com.sun.xml.bind</groupId> -->
+<!-- 			<artifactId>jaxb-impl</artifactId> -->
+<!-- 			<version>${jaxb.version}</version> -->
+<!-- 		</dependency> -->
+		
+<!-- 		<dependency> -->
+<!-- 		    <groupId>asm</groupId> -->
+<!-- 		    <artifactId>asm</artifactId> -->
+<!-- 		    <version>${asm.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>xml-apis</groupId> -->
+<!-- 			<artifactId>xml-apis</artifactId> -->
+<!-- 			<version>${xml.apis.version}</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 		    <groupId>com.sun.xml.fastinfoset</groupId> -->
+<!-- 		    <artifactId>FastInfoset</artifactId> -->
+<!-- 		    <version>${fastinfoset.version}</version> -->
+<!-- 		</dependency> -->
+
+
+
+<!-- 		<dependency> -->
+<!-- 		    <groupId>javax.mail</groupId> -->
+<!-- 		    <artifactId>mail</artifactId> -->
+<!-- 		    <version>${javax.mail.version}</version> -->
+<!-- 		</dependency> -->
+
+
+<!-- 		<dependency> -->
+<!-- 			<groupId>commons-collections</groupId> -->
+<!-- 			<artifactId>commons-collections</artifactId> -->
+<!-- 			<version>3.2.1</version> -->
+<!-- 		</dependency> -->
+
+	</dependencies>
+
+	<repositories>
+		<repository>
+		  <id>jboss-repo</id>
+		  <name>JBoss repository</name>
+		  <url>https://repository.jboss.org/nexus/content/groups/public</url>
+		</repository>
+		<repository>
+		  <id>htmlunit-repo</id>
+		  <name>HTMLUnit repository</name>
+		  <url>http://htmlunit.sourceforge.net/m2-repo-snapshots/</url>
+		</repository>
+		<repository>
+			<id>maven-repo</id>
+			<name>maven-repo</name>
+			<url>http://repo2.maven.org/maven2</url>
+		</repository>
+		<repository>
+			<id>wellfleet-repo</id>
+			<name>wellfleet-repo</name>
+			<url>http://www.wellfleetsoftware.com/m2/repository</url>
+			<releases>
+				<checksumPolicy>ignore</checksumPolicy>
+			</releases>
+		</repository>
+		<repository>
+			<id>infosys-repo</id>
+			<name>infosys-repo</name>
+			<url>http://www.infosys.tuwien.ac.at/mvn/</url> <!-- file://lib -->
+		</repository>
+		<repository>
+			<id>local-tools-repo</id>
+			<url>file://lib</url> <!-- file://lib -->
+		</repository>
+		<!-- as of 14.01.2013, this introduces an unresolvable dependency to jersey-server: 
+			http://stackoverflow.com/questions/11689953/maven-uses-wrong-repository-to-download -->
+<!-- 		<repository> -->
+<!-- 		    <id>java.net</id> -->
+<!-- 		    <url>http://download.java.net/maven/2/</url> -->
+<!-- 		</repository> -->
+
+	</repositories>
+
+</project>
