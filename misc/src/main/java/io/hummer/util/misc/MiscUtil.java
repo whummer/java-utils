@@ -31,5 +31,10 @@ public class MiscUtil {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public String getCaller() {
+		StackTraceElement el = Thread.currentThread().getStackTrace()[3];
+		return el.getClassName() + "." + el.getMethodName() + "(...)";
+	}
 	
 }

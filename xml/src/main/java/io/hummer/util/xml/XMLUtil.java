@@ -29,6 +29,8 @@ import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -817,15 +819,19 @@ public class XMLUtil {
 		return defaultJaxbContext;
 	}
 
-	public Element toElement(Object jaxbObject) throws Exception {
-		if(jaxbObject == null)
-			return null;
-		if(jaxbObject instanceof Element)
-			return (Element) jaxbObject;
-		if(jaxbObject instanceof String)
-			return toElement((String) jaxbObject);
-		return toElement(jaxbObject,
-				getJaxbContext(jaxbObject.getClass(), true));
+	public Element toElement(Object jaxbObject) {
+		try {
+			if(jaxbObject == null)
+				return null;
+			if(jaxbObject instanceof Element)
+				return (Element) jaxbObject;
+			if(jaxbObject instanceof String)
+				return toElement((String) jaxbObject);
+			return toElement(jaxbObject,
+					getJaxbContext(jaxbObject.getClass(), true));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Element toElementWithDynamicContext(Object jaxbObject)
@@ -887,15 +893,28 @@ public class XMLUtil {
 		return (T) ctx.createUnmarshaller().unmarshal(element);
 	}
 
-	public String toString(Object jaxbObject) throws Exception {
+	public String toString(Object jaxbObject) {
 		return toString(jaxbObject, false);
 	}
 
-	public String toString(Object jaxbObject, boolean indent)
-			throws Exception {
+	public String toString(Object jaxbObject, boolean indent) {
 		return toString(toElement(jaxbObject), indent);
 	}
 
+
+	public Element getSOAPBodyFromEnvelope(Element env) {
+		try {
+			if(env instanceof SOAPEnvelope) {
+				return ((SOAPEnvelope)env).getBody();
+			}
+			return getFirstChildElement(env, "Body");
+		} catch (SOAPException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	public String getSOAPBodyAsString(Element env) {
+		return toString(getSOAPBodyFromEnvelope(env));
+	}
 	public void appendTextChild(Element parent, String textNode)
 			throws Exception {
 		if(parent == null || textNode == null) {
@@ -1126,5 +1145,6 @@ public class XMLUtil {
         String xml = serializer.write(json);
         return toElement(xml);
 	}
+
 	
 }

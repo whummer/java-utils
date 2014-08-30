@@ -17,6 +17,11 @@
 			<artifactId>utils-xml</artifactId>
 			<version>1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>io.hummer</groupId>
+			<artifactId>utils-misc</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -72,4 +72,9 @@ public class Pair<T1, T2> {
 	public static <T1, T2> Pair<T1, T2> create(T1 t1, T2 t2) {
 		return new Pair<T1, T2>(t1, t2);
 	}
+
+	@Override
+	public String toString() {
+		return "Pair(" + t1 + "," + t2 + ")";
+	}
 }

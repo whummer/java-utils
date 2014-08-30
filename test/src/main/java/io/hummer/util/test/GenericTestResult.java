@@ -132,10 +132,14 @@ public class GenericTestResult {
 		}
 
 		public void removeEntry(String name) {
-			for(int i = 0; i < entries.size(); i ++) {
-				if(entries.get(i).name.equals(name)) {
-					entries.remove(i);
+			List<Entry> toRemove = new LinkedList<Entry>();
+			for(Entry e : toRemove) {
+				if(e.name.equals(name)) {
+					toRemove.add(e);
 				}
+			}
+			for(Entry e : toRemove) {
+				entries.remove(e);
 			}
 		}
 	}
@@ -864,10 +868,16 @@ public class GenericTestResult {
 		Element e  = xmlUtil.toElement(content);
 		return xmlUtil.toJaxbObject(GenericTestResult.class, e);
 	}
-	
+
 	public void saveOnShutdown(final String filePath) {
+		saveOnShutdown(filePath, null);
+	}
+	public void saveOnShutdown(final String filePath, final Runnable runBefore) {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
+				if(runBefore != null) {
+					runBefore.run();
+				}
 				save(filePath);
 			}
 		});

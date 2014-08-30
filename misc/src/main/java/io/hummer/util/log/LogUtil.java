@@ -60,7 +60,7 @@ public class LogUtil {
 				//System.out.println("sysconfig: ---> " + System.getProperty("log4j.configuration") + " - " + conf.exists());
 				if(conf.exists()
 						&& System.getProperty("log4j.configuration") == null) {
-					System.out.println("Logger configuration: " + new File(logPropFile).toURI());
+					System.out.println("Logger configuration (file): " + new File(logPropFile).toURI());
 					System.setProperty("log4j.configuration", "file:" + conf);
 					if(loggerInitialized != null) loggerInitialized.set(true);
 				} else if(!conf.exists()) {
@@ -73,7 +73,7 @@ public class LogUtil {
 							for(URL u : res.keySet()) {
 								InputStream configStream = u.openStream();
 								props.load(configStream);
-								System.out.println("Logger configuration: " + u);
+								System.out.println("Logger config (classpath): " + u);
 								configStream.close();
 							}
 							//System.out.println("Done loading system resources.");

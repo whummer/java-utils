@@ -135,13 +135,18 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 <!-- 		<dependency> -->
 <!-- 			<groupId>com.sun.xml.bind</groupId> -->
 <!-- 			<artifactId>jaxb-impl</artifactId> -->
 <!-- 			<version>${jaxb.version}</version> -->
 <!-- 		</dependency> -->
-		
 <!-- 		<dependency> -->
 <!-- 		    <groupId>asm</groupId> -->
 <!-- 		    <artifactId>asm</artifactId> -->
@@ -157,16 +162,11 @@
 <!-- 		    <artifactId>FastInfoset</artifactId> -->
 <!-- 		    <version>${fastinfoset.version}</version> -->
 <!-- 		</dependency> -->
-
-
-
 <!-- 		<dependency> -->
 <!-- 		    <groupId>javax.mail</groupId> -->
 <!-- 		    <artifactId>mail</artifactId> -->
 <!-- 		    <version>${javax.mail.version}</version> -->
 <!-- 		</dependency> -->
-
-
 <!-- 		<dependency> -->
 <!-- 			<groupId>commons-collections</groupId> -->
 <!-- 			<artifactId>commons-collections</artifactId> -->
