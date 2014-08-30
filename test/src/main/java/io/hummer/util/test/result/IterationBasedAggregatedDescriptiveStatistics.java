@@ -14,13 +14,17 @@ import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Comparable<KeyType>> {
 //	List<KeyType> keyOrder = new LinkedList<KeyType>();
 //	Map<KeyType,Double> values = new HashMap<KeyType,Double>();
+
 	List<Entry<KeyType>> values = new LinkedList<Entry<KeyType>>();
+
+	static double PRECISION = 0.000000001;
 
 	public static class Range<KeyType extends Comparable<KeyType>> {
 		KeyType fromKey, toKey;
 
 		public boolean isInRange(KeyType key) {
-			return key.compareTo(fromKey) >= 0 && key.compareTo(toKey) < 0;
+//			return key.compareTo(fromKey) >= 0 && key.compareTo(toKey) < 0;
+			return (key.compareTo(fromKey) > 0 && key.compareTo(toKey) <= 0);
 		}
 
 		@Override
@@ -32,6 +36,8 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 		private double start;
 		private double step;
 		private double end;
+		public static boolean INCLUDE_EMPTY_START_POINT = true;
+		private boolean includeEmptyStartPoint = INCLUDE_EMPTY_START_POINT;
 		//		double modulo;
 		public RangesGeneratorDefault(double start, double step, double end) {
 //			this.modulo = modulo;
@@ -41,6 +47,13 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 		}
 		public List<Range<Double>> getRanges() {
 			List<Range<Double>> result = new LinkedList<Range<Double>>();
+			// add empty range at the start
+			if(includeEmptyStartPoint ) {
+				Range<Double> r1 = new Range<Double>();
+				r1.fromKey = start - PRECISION;
+				r1.toKey = start;
+				result.add(r1);
+			}
 			for(double i = start; i <= end - step; i += step) {
 				Range<Double> range = new Range<Double>();
 				range.fromKey = i;
@@ -167,6 +180,7 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 	 */
 	public static class IterationBasedAggregatedDescriptiveStatisticsDefault extends 
 			IterationBasedAggregatedDescriptiveStatistics<Double> {
+//		boolean includeZero = true;
 //		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
 //				double stepSize) {
 //			double to = 0;
@@ -178,11 +192,14 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 //		}
 		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
 				double steps, double to) {
-			return getStatistics(0, steps, to);
+			double from = 0;
+			return getStatistics(from, steps, to);
 		}
 		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
 				double from, double steps, double to) {
-			to = ((double)((int)(to / steps)) + 1.0) * steps;
+			if(to % steps > PRECISION) {
+				to = ((double)((int)(to / steps)) + 1.0) * steps;
+			}
 			return getStatistics(new RangesGeneratorDefault(from, steps, to));
 		}
 		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo, double timeTo) {
@@ -191,6 +208,10 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo, double timeTo, double[] valuesIfEmpty) {
 			List<Pair<Range<Double>, DescriptiveStatistics>> list = getStatistics(modulo, timeTo);
 			if(list.isEmpty()) {
+				return new Pair<Range<Double>, DescriptiveStatistics>(null, new DescriptiveStatistics(valuesIfEmpty));
+			}
+			Pair<Range<Double>, DescriptiveStatistics> last = list.get(list.size() - 1);
+			if(last.getSecond().getN() <= 0) {
 				return new Pair<Range<Double>, DescriptiveStatistics>(null, new DescriptiveStatistics(valuesIfEmpty));
 			}
 			return list.get(list.size() - 1);
