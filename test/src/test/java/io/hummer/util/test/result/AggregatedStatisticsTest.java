@@ -24,19 +24,20 @@ public class AggregatedStatisticsTest {
 		d.addValue(3.0, 4.0);
 		d.addValue(3.0, 5.0);
 
-		Assert.assertEquals(2, d.getStatistics(2).size());
+		//System.out.println(d.getStatistics(2, 3));
+		Assert.assertEquals(2, d.getStatistics(2, 3).size());
 
 		d.addValue(4.0, 3.0);
 		d.addValue(4.0, 4.0);
 		d.addValue(4.0, 5.0);
 
 		Assert.assertEquals(32, d.getStatistics().getSum(), precision);
-		Assert.assertEquals(d.getStatistics(2).size(), 3);
-		Assert.assertEquals(d.getLastStatistics(2).getSecond().getMean(), 4, precision);
+		Assert.assertEquals(d.getStatistics(2, 4).size(), 3);
+		Assert.assertEquals(d.getLastStatistics(2, 4).getSecond().getMean(), 4, precision);
 
 		d.addValue(8.0, 0.0);
-		System.out.println(d.getStatistics(2));
-		Assert.assertEquals(d.getStatistics(2).size(), 5);
+		//System.out.println(d.getStatistics(2, 8));
+		Assert.assertEquals(d.getStatistics(2, 8).size(), 5);
 	}
 
 }

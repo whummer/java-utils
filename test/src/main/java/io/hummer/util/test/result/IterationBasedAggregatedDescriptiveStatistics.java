@@ -167,28 +167,29 @@ public class IterationBasedAggregatedDescriptiveStatistics<KeyType extends Compa
 	 */
 	public static class IterationBasedAggregatedDescriptiveStatisticsDefault extends 
 			IterationBasedAggregatedDescriptiveStatistics<Double> {
-		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
-				double stepSize) {
-			double to = 0;
-			if(!values.isEmpty()) {
-				to = values.get(values.size() - 1).key;
-				to = ((double)((int)(to / stepSize)) + 1.0) * stepSize;
-			}
-			return getStatistics(0, stepSize, to);
-		}
+//		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
+//				double stepSize) {
+//			double to = 0;
+//			if(!values.isEmpty()) {
+//				to = values.get(values.size() - 1).key;
+//				to = ((double)((int)(to / stepSize)) + 1.0) * stepSize;
+//			}
+//			return getStatistics(0, stepSize, to);
+//		}
 		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
 				double steps, double to) {
 			return getStatistics(0, steps, to);
 		}
 		public List<Pair<Range<Double>, DescriptiveStatistics>> getStatistics(
 				double from, double steps, double to) {
+			to = ((double)((int)(to / steps)) + 1.0) * steps;
 			return getStatistics(new RangesGeneratorDefault(from, steps, to));
 		}
-		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo) {
-			return getLastStatistics(modulo, new double[]{0});
+		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo, double timeTo) {
+			return getLastStatistics(modulo, timeTo, new double[]{0});
 		}
-		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo, double[] valuesIfEmpty) {
-			List<Pair<Range<Double>, DescriptiveStatistics>> list = getStatistics(modulo);
+		public Pair<Range<Double>, DescriptiveStatistics> getLastStatistics(double modulo, double timeTo, double[] valuesIfEmpty) {
+			List<Pair<Range<Double>, DescriptiveStatistics>> list = getStatistics(modulo, timeTo);
 			if(list.isEmpty()) {
 				return new Pair<Range<Double>, DescriptiveStatistics>(null, new DescriptiveStatistics(valuesIfEmpty));
 			}
