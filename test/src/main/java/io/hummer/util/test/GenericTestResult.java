@@ -569,7 +569,8 @@ public class GenericTestResult {
 				int colIndexStart = 1 + getSublistSum(xValueNamesLengths, 0, i - 1) - xValueNamesLengths.get(i - 1) + 1;
 				int colIndexEnd = 1 + getSublistSum(xValueNamesLengths, 0, i - 1);
 				String colIndexes = "";
-				for(int j = colIndexStart; j <= colIndexEnd; j ++) {
+				int maxCols = 4; /* required for candlesticks functionality */
+				for(int j = colIndexStart; j <= colIndexEnd && j <= (maxCols + 1); j ++) {
 					colIndexes += ":" + j;
 				}
 				String colIndexVariable = "(\\$1)";
@@ -577,10 +578,22 @@ public class GenericTestResult {
 					colIndexVariable = "(\\$1-0.5+" + ((double)i)*(1.0/(double)titles.length) + ")";
 				if(colIndexStart < colIndexEnd) {
 					String plotLine = "\"gnuplot.values\" using " + colIndexVariable + colIndexes + 
-							" title '<title" + i + ">' with candlesticks ls " + i + " fs pattern " + fillStylePatterns.get(i);
+							" title '<title" + i + ">' with candlesticks whiskerbars ls " + i + " fs pattern " + fillStylePatterns.get(i);
 
-					if(drawLineCandle)
-						plotLine += ", \"gnuplot.values\" using 1:" + (colIndexStart + 2) + " title '' with lines ls " + i;
+					if(drawLineCandle) {
+						int idx = colIndexStart + 2;
+						if(xValueNamesLengths.get(i - 1) >= 5) {
+							idx = colIndexStart + 4;
+						}
+						plotLine += ", \"gnuplot.values\" using 1:" + idx + " title '' with lines ls " + i;
+					}
+
+					/* draw median line in boxplot/candlesticks */
+					if(xValueNamesLengths.get(i - 1) >= 5) {
+						int idx = (colIndexStart + 4);
+						plotLine += ", \"gnuplot.values\" using 1:" + idx + ":" + idx + ":" + idx + ":" + idx + 
+								" with candlesticks lt -1 lw 2 notitle " + i;
+					}
 
 					if(multiAxes && i > 1) {
 						plotLine += " axes x1y" + i;
