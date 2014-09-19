@@ -15,12 +15,12 @@
 		<dependency>
 			<groupId>io.hummer</groupId>
 			<artifactId>utils-xml</artifactId>
-			<version>1-SNAPSHOT</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.hummer</groupId>
 			<artifactId>utils-misc</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
