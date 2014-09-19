@@ -106,7 +106,6 @@
 		<!-- had to upgrade from 1.4 to 1.9, because some transitive 
 			dependencies were not  -->
 		<jersey.version>1.9</jersey.version>
-		<javax.mail.version>1.4.1</javax.mail.version>
 		<!-- we would like to upgrade to asm 4.0, but jersey and other 
 		 	 libs prevent us from doing so...  -->
 		<asm.version>3.3.1</asm.version>
@@ -148,24 +147,9 @@
 <!-- 			<version>${jaxb.version}</version> -->
 <!-- 		</dependency> -->
 <!-- 		<dependency> -->
-<!-- 		    <groupId>asm</groupId> -->
-<!-- 		    <artifactId>asm</artifactId> -->
-<!-- 		    <version>${asm.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
 <!-- 			<groupId>xml-apis</groupId> -->
 <!-- 			<artifactId>xml-apis</artifactId> -->
 <!-- 			<version>${xml.apis.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.sun.xml.fastinfoset</groupId> -->
-<!-- 		    <artifactId>FastInfoset</artifactId> -->
-<!-- 		    <version>${fastinfoset.version}</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>javax.mail</groupId> -->
-<!-- 		    <artifactId>mail</artifactId> -->
-<!-- 		    <version>${javax.mail.version}</version> -->
 <!-- 		</dependency> -->
 <!-- 		<dependency> -->
 <!-- 			<groupId>commons-collections</groupId> -->

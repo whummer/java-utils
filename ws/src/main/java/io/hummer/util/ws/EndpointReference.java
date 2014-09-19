@@ -395,15 +395,15 @@ public class EndpointReference implements Serializable {
 				"</wsa:EndpointReference>");
 		i.serviceEPR = epr;
 		System.out.println(epr);
-		epr.addReferenceParameter(at.ac.tuwien.infosys.util.Util.getInstance().toElement("<elements>foo</elements>"));
+		epr.addReferenceParameter(io.hummer.util.Util.getInstance().toElement("<elements>foo</elements>"));
 		System.out.println(epr);
 		System.out.println(epr.toString("foobar"));
-		epr = new EndpointReference(at.ac.tuwien.infosys.util.Util.getInstance().toElement(epr));
+		epr = new EndpointReference(io.hummer.util.Util.getInstance().toElement(epr));
 		System.out.println(epr);
 		System.out.println(epr.getReferenceParameters());
-		System.out.println(at.ac.tuwien.infosys.util.Util.getInstance().toString(epr));
-		System.out.println(at.ac.tuwien.infosys.util.Util.getInstance().toString(i));
-		System.out.println(at.ac.tuwien.infosys.util.Util.getInstance().toString(epr.getServiceName()));
+		System.out.println(io.hummer.util.Util.getInstance().toString(epr));
+		System.out.println(io.hummer.util.Util.getInstance().toString(i));
+		System.out.println(io.hummer.util.Util.getInstance().toString(epr.getServiceName()));
 		System.out.println(epr.getServiceName().getPortName());
 	}*/
 	

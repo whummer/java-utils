@@ -59,6 +59,11 @@
 			<artifactId>tagsoup</artifactId>
 			<version>${tagsoup.version}</version>
 		</dependency>
+		<dependency>
+		    <groupId>com.sun.xml.fastinfoset</groupId>
+		    <artifactId>FastInfoset</artifactId>
+		    <version>${fastinfoset.version}</version>
+		</dependency>
 	</dependencies>
 
 </project>

@@ -41,7 +41,7 @@
 					<archive>
 						<index>true</index>
 						<manifestEntries>
-							<Premain-Class>at.ac.tuwien.infosys.util.perf.MemoryAgent</Premain-Class>
+							<Premain-Class>io.hummer.util.perf.MemoryAgent</Premain-Class>
 						</manifestEntries>
 					</archive>
 				</configuration>

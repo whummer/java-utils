@@ -93,7 +93,7 @@ public class XMLUtil {
 				"org.apache.xerces.parsers.SoftReferenceSymbolTableConfiguration");
 		defaultJaxbContextClasses = new LinkedList<Class<?>>();
 		for(String clazz : Arrays
-				.asList("at.ac.tuwien.infosys.ws.EndpointReference",
+				.asList("io.hummer.util.ws.EndpointReference",
 
 						"at.ac.tuwien.infosys.aggr.request.AbstractInput",
 						"at.ac.tuwien.infosys.aggr.request.EventingInput",

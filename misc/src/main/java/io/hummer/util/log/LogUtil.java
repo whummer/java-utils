@@ -28,7 +28,7 @@ public class LogUtil {
 	 * The entry we want is at position 2, example:
 	 * 
 	 * 0: java.lang.Thread.getStackTrace()
-	 * 1: at.ac.tuwien.infosys.util.Util.getLogger()
+	 * 1: io.hummer.util.Util.getLogger()
 	 * 2: my.package.MyClass.myInitMethod()
 	 * 3: ...
 	 * @return logger for the calling class
