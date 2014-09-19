@@ -76,6 +76,8 @@ import org.eclipse.jetty.util.thread.ExecutorThreadPool;
 import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.xml.ws.transport.http.HttpAdapter;
+import com.sun.xml.ws.transport.http.server.ServerAdapter;
 
 @SuppressWarnings("all")
 @XmlRootElement
@@ -223,13 +225,6 @@ public abstract class AbstractNode implements IAbstractNode {
 		}
 		
 		JettyHttpContext wsContext1 = (JettyHttpContext)httpServer.createContext(u.getPath());
-		//com.sun.net.httpserver.HttpHandler h;
-		wsContext1.setHandler(new HttpHandler() {
-			public void handle(com.sun.net.httpserver.HttpExchange ex) throws IOException {
-				System.out.println("handle: " + ex);
-			}
-		});
-		System.out.println("--> " + wsContext1.getHandler());
 		Endpoint endpoint = Endpoint.create(service);
 		if(service instanceof AbstractNode) {
 			if(((AbstractNode)service).endpoint != null)
@@ -319,23 +314,14 @@ public abstract class AbstractNode implements IAbstractNode {
 					throws IOException {
 
 				if(!ex.getRequestMethod().equals("OPTIONS")) {
-					//System.out.println("handle");
+					addCORSHeaders(ex);
 					h.handle(ex);
+					//System.out.println(ex.getRequestMethod() + ": " + ex.getResponseHeaders() + " - " + new HashMap<>(ex.getResponseHeaders()));
+					return;
 				}
-				//System.out.println(new HashMap<>(ex.getResponseHeaders()));
-
-				// Allow CORS policy (cross-domain requests, from Web browsers)
-				ex.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-				ex.getResponseHeaders().add("Access-Control-Allow-Headers", 
-						"Origin, Content-Type, Accept, Transfer-Encoding, "
-						+ "Accept-Encoding, Accept-Language, Connection, Cookie, Host, "
-						+ "Referer, User-Agent, Server, Authorization, x-requested-with");
-				ex.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
-				ex.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
-				ex.getResponseHeaders().add("Access-Control-Max-Age", "1209600");
-				ex.getResponseHeaders().add("Access-Control-Expose-Headers", "Location");
 
 				if(ex.getRequestMethod().equals("OPTIONS")) {
+					addCORSHeaders(ex);
 					ex.sendResponseHeaders(200, -1);
 					ex.getResponseBody().close();
 					return;
@@ -367,6 +353,19 @@ public abstract class AbstractNode implements IAbstractNode {
 
 	}
 
+	private static void addCORSHeaders(com.sun.net.httpserver.HttpExchange ex) {
+		// Allow CORS policy (cross-domain requests, from Web browsers)
+		ex.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+		ex.getResponseHeaders().add("Access-Control-Allow-Headers", 
+				"Origin, Content-Type, Accept, Transfer-Encoding, "
+				+ "Accept-Encoding, Accept-Language, Connection, Cookie, Host, "
+				+ "Referer, User-Agent, Server, Authorization, x-requested-with");
+		ex.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
+		ex.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+		ex.getResponseHeaders().add("Access-Control-Max-Age", "1209600");
+		ex.getResponseHeaders().add("Access-Control-Expose-Headers", "Location");
+	}
+	
 	public static AbstractNode getDeployedNodeForResourceUri(UriInfo info) throws Exception {
 		String absolute = info.getAbsolutePath().toString();
 		URL u = new URL(absolute);
