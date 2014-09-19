@@ -15,7 +15,7 @@
 		<dependency>
 			<groupId>io.hummer</groupId>
 			<artifactId>utils-misc</artifactId>
-			<version>${project.version}</version>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
