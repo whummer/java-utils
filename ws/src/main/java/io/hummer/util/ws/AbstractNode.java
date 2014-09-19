@@ -319,7 +319,7 @@ public abstract class AbstractNode implements IAbstractNode {
 					throws IOException {
 				// Allow CORS policy (cross-domain requests, from Web browsers)
 				ex.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-				ex.getResponseHeaders().add("Access-Control-Allow-Headers", "origin, content-type, accept, authorization, x-requested-with");
+				ex.getResponseHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Transfer-Encoding, Server, Authorization, x-requested-with");
 				ex.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
 				ex.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 				ex.getResponseHeaders().add("Access-Control-Max-Age", "1209600");
