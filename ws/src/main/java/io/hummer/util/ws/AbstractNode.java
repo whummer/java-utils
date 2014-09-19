@@ -317,19 +317,30 @@ public abstract class AbstractNode implements IAbstractNode {
 		wsContext1.setHandler(new HttpHandler() {
 			public void handle(com.sun.net.httpserver.HttpExchange ex)
 					throws IOException {
+
+				if(!ex.getRequestMethod().equals("OPTIONS")) {
+					//System.out.println("handle");
+					h.handle(ex);
+				}
+				//System.out.println(new HashMap<>(ex.getResponseHeaders()));
+
 				// Allow CORS policy (cross-domain requests, from Web browsers)
 				ex.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
-				ex.getResponseHeaders().add("Access-Control-Allow-Headers", "Origin, Content-Type, Accept, Transfer-Encoding, Server, Authorization, x-requested-with");
+				ex.getResponseHeaders().add("Access-Control-Allow-Headers", 
+						"Origin, Content-Type, Accept, Transfer-Encoding, "
+						+ "Accept-Encoding, Accept-Language, Connection, Cookie, Host, "
+						+ "Referer, User-Agent, Server, Authorization, x-requested-with");
 				ex.getResponseHeaders().add("Access-Control-Allow-Credentials", "true");
 				ex.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 				ex.getResponseHeaders().add("Access-Control-Max-Age", "1209600");
 				ex.getResponseHeaders().add("Access-Control-Expose-Headers", "Location");
+
 				if(ex.getRequestMethod().equals("OPTIONS")) {
 					ex.sendResponseHeaders(200, -1);
 					ex.getResponseBody().close();
 					return;
 				}
-				h.handle(ex);
+				//System.out.println(new HashMap<>(ex.getResponseHeaders()));
 			}
 		});
 
