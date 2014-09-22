@@ -11,6 +11,23 @@
 	<artifactId>utils-misc</artifactId>
 	<packaging>jar</packaging>
 
+	<build>
+		<plugins>
+			 <plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<index>true</index>
+						<manifestEntries>
+							<Premain-Class>io.hummer.util.perf.MemoryAgent</Premain-Class>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>commons-lang</groupId>
